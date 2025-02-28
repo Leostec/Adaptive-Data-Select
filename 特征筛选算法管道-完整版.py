@@ -670,8 +670,8 @@ def genetic_algorithm(population_size, generations, num_best, crossover_rate, mu
 
 def data_load():
     # 加载数据
-    data1 = pd.read_excel('/Users/leo/研究生/资产评估/汕头合作/线下交流/augmented_data_train.xlsx', index_col=0)
-    data2 = pd.read_excel('/Users/leo/研究生/资产评估/汕头合作/线下交流/augmented_data_test.xlsx', index_col=0)
+    data1 = pd.read_excel('./data/augmented_data_train.xlsx', index_col=0)
+    data2 = pd.read_excel('./data/augmented_data_test.xlsx', index_col=0)
 
     # 分离特征和目标变量
     X_train = data1.drop(['过会金额（万元）', '项目编号', '企业名称', '项目经理A', '过会期限（年）'], axis=1)

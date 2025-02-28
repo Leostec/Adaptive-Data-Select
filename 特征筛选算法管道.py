@@ -166,8 +166,8 @@ def select_data(data, X_train,y_train,X_test,y_test, num, model):
 
 
 # 加载数据
-data1 = pd.read_excel('/Users/leo/研究生/资产评估/汕头合作/线下交流/augmented_data_train.xlsx', index_col=0)
-data2 = pd.read_excel('/Users/leo/研究生/资产评估/汕头合作/线下交流/augmented_data_test.xlsx', index_col=0)
+data1 = pd.read_excel('./data/augmented_data_train.xlsx', index_col=0)
+data2 = pd.read_excel('./data/augmented_data_test.xlsx', index_col=0)
 # 分离特征和目标变量
 X_train = data1.drop(['过会金额（万元）','项目编号','企业名称','项目经理A','过会期限（年）'], axis=1)
 y_train = data1['过会金额（万元）']
@@ -411,8 +411,8 @@ def construct_adjacency_matrix(lambda_matrix_1, lambda_matrix_2, lambda_matrix_3
         final_ranking = final_global_ranking_df.drop(final_global_ranking_df.columns[1], axis=1)
 
     # 加载数据
-    data1 = pd.read_excel('/Users/leo/研究生/资产评估/汕头合作/线下交流/augmented_data_train.xlsx', index_col=0)
-    data2 = pd.read_excel('/Users/leo/研究生/资产评估/汕头合作/线下交流/augmented_data_test.xlsx', index_col=0)
+    data1 = pd.read_excel('./data/augmented_data_train.xlsx', index_col=0)
+    data2 = pd.read_excel('./data/augmented_data_test.xlsx', index_col=0)
 
     # 分离特征和目标变量
     X_train = data1.drop(['过会金额（万元）', '项目编号', '企业名称', '项目经理A', '过会期限（年）'], axis=1)
@@ -491,8 +491,8 @@ def crossover(parent1, parent2):
     return child
 
 # Mutation
-def mutation(individual):
-    mutation_rate = 0.1
+def mutation(individual,mutation_rate):
+
     if random.random() < mutation_rate:
         individual['lambda_matrix_1'] = random.uniform(0, 1)
     if random.random() < mutation_rate:
@@ -629,7 +629,8 @@ def genetic_algorithm(population_size, generations, num_best, crossover_rate, mu
                 new_population.append(child)
             else:
                 new_population.append(random.choice(best_individuals))
-
+        # 对新种群应用变异操作
+        new_population = [mutation(ind, mutation_rate) for ind in new_population]
         population = new_population
 
     # Return the best individual after all generations
@@ -659,7 +660,7 @@ def genetic_algorithm(population_size, generations, num_best, crossover_rate, mu
 
 
 # Example usage
-best_individual = genetic_algorithm(population_size=100, generations=50, num_best=5, crossover_rate=0.8,
+best_individual = genetic_algorithm(population_size=100, generations=5, num_best=5, crossover_rate=0.8,
                                     mutation_rate=0.1)
 
 print("Final optimal individual:")
